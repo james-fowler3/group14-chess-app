@@ -51,7 +51,7 @@ function GamePage({ game, setGame }) {
             return;
         }
 
-        // Log move
+        // Log moves
         const moveText = `${algebraic(from.row, from.col)} → ${algebraic(
             to.row,
             to.col
