@@ -1,116 +1,90 @@
-/* ========================= */
-/* Global Layout             */
-/* ========================= */
-
 body {
-    margin: 0;
+    background: #f2f2f2;
     font-family: Arial, sans-serif;
-    background: #f3f3f3;
-}
-
-.app-container {
-    padding: 20px;
-}
-
-/* ========================= */
-/* Join Game Page            */
-/* ========================= */
-
-.join-container {
-    max-width: 400px;
-    margin: 60px auto;
-    padding: 25px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.join-container h1 {
     text-align: center;
+    margin: 0;
+    padding: 0;
 }
-
-.join-container form {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.join-container input {
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-}
-
-.join-container button {
-    padding: 10px;
-    background: #3b7bfd;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.join-container button:hover {
-    background: #316ee6;
-}
-
-/* ========================= */
-/* Game Page Layout          */
-/* ========================= */
-
-.game-container {
-    max-width: 900px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-.history {
-    margin-top: 20px;
-    text-align: left;
-}
-
-/* ========================= */
-/* Chessboard                */
-/* ========================= */
 
 .board {
     display: grid;
-    grid-template-columns: repeat(8, 60px);
-    grid-template-rows: repeat(8, 60px);
-    margin: 20px auto;
-    border: 3px solid #333;
+    grid-template-columns: repeat(8, 80px);
+    grid-template-rows: repeat(8, 80px);
+    width: 640px;
+    height: 640px;
+    margin: 30px auto;
+
+    border: 4px solid #333;
+    border-radius: 6px;
+
+    box-shadow: 0px 4px 20px rgba(0,0,0,0.25);
 }
 
 .square {
-    width: 60px;
-    height: 60px;
-    font-size: 32px;
+    width: 80px;
+    height: 80px;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
+    font-size: 46px;
     cursor: pointer;
-    padding: 0;
-    border: none;
+
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+
+    user-select: none;
 }
 
-/* Light & Dark squares */
 .square.light {
-    background: #eee;
+    background-color: #e8c99a;
 }
 
 .square.dark {
-    background: #769656;
+    background-color: #b8875d;
+}
+
+.square.selected {
+    outline: 4px solid yellow;
+    z-index: 2;
+}
+
+.piece-text {
+    font-size: 48px;
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: unset;
+}
+
+.piece-text.white {
     color: white;
 }
 
-/* Highlight selected square */
-.square.selected {
-    outline: 3px solid yellow;
+.piece-text.black {
+    color: black;
 }
 
-/* Piece styling */
-.piece-text {
-    pointer-events: none;
-    font-size: 36px;
+h2 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 28px;
+}
+
+button.exit-btn {
+    font-size: 16px;
+    padding: 8px 16px;
+    margin-top: 20px;
+
+    cursor: pointer;
+    border: 1px solid #444;
+    border-radius: 4px;
+
+    background: #ddd;
+}
+
+button.exit-btn:hover {
+    background: #ccc;
 }

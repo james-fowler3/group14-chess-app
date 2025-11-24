@@ -1,7 +1,3 @@
-// ===============================
-// ENUMS
-// ===============================
-
 export const Color = {
     WHITE: "w",
     BLACK: "b"
@@ -16,18 +12,15 @@ export const PieceType = {
     KING: "K"
 };
 
-// ===============================
-// CELL CLASS
-// ===============================
-
-class Cell {
-    constructor(piece = null, position = null) {
-        this.piece = piece;       // Piece or null
-        this.position = position; // { row, col }
+export class Cell {
+    constructor(row, col, piece = null) {
+        this.row = row;
+        this.col = col;
+        this.piece = piece;
     }
 
-    getPiece() {
-        return this.piece;
+    isEmpty() {
+        return this.piece === null;
     }
 
     setPiece(piece) {
@@ -37,130 +30,93 @@ class Cell {
     removePiece() {
         this.piece = null;
     }
-
-    isEmpty() {
-        return this.piece === null;
-    }
 }
 
-// ===============================
-// PIECE CLASS (Base)
-// ===============================
-
-class Piece {
-    constructor(type, color, position = null) {
-        this.type = type;         // PieceType
-        this.color = color;       // Color
-        this.position = position; // { row, col }
+export class Piece {
+    constructor(type, color) {
+        this.type = type;
+        this.color = color;
     }
 
-    canMakeMove(fromCell, toCell, board) {
-        // Demo version – always true
+    canMakeMove(from, to, board) {
+        // Very move allowed --> Just demo
         return true;
     }
 }
 
-// ===============================
-// BOARD CLASS
-// ===============================
+export class Pawn extends Piece{ constructor(c){super(PieceType.PAWN,c);} }
+export class Rook extends Piece { constructor(c){super(PieceType.ROOK,c);} }
+export class Knight extends Piece { constructor(c){super(PieceType.KNIGHT,c);} }
+export class Bishop extends Piece { constructor(c){super(PieceType.BISHOP,c);} }
+export class Queen extends Piece { constructor(c){super(PieceType.QUEEN,c);} }
+export class King extends Piece { constructor(c){super(PieceType.KING,c);} }
 
-class Board {
+export class Board {
     constructor() {
-        this.grid = this.createEmptyBoard();
+        this.grid = [];
+
+        for (let r = 0; r < 8; r++) {
+            this.grid[r] = [];
+            for (let c = 0; c < 8; c++) {
+                this.grid[r][c] = new Cell(r, c, null);
+            }
+        }
     }
 
-    createEmptyBoard() {
-        return Array.from({ length: 8 }, (_, row) =>
-            Array.from({ length: 8 }, (_, col) => {
-                return new Cell(null, { row, col });
-            })
-        );
-    }
-
-    placePiece(piece, row, col) {
-        this.grid[row][col].setPiece(piece);
-        piece.position = { row, col };
+    getCell(row, col) {
+        return this.grid[row][col];
     }
 
     movePiece(from, to) {
-        const fromCell = this.grid[from.row][from.col];
-        const toCell = this.grid[to.row][to.col];
+        const fromCell = this.getCell(from.row, from.col);
+        const toCell = this.getCell(to.row, to.col);
 
-        const piece = fromCell.getPiece();
-
-        // Capture handling (demo)
-        if (!toCell.isEmpty()) {
-            // In full version: store captured piece
-        }
-
+        const piece = fromCell.piece;
         toCell.setPiece(piece);
         fromCell.removePiece();
-
-        piece.position = { row: to.row, col: to.col };
-    }
-
-    getPiece(row, col) {
-        return this.grid[row][col].getPiece();
     }
 }
 
-// ===============================
-// PLAYER CLASS
-// ===============================
-
-class Player {
+export class Player {
     constructor(name, color) {
         this.name = name;
         this.color = color;
     }
 }
 
-// ===============================
-// GAME CLASS
-// ===============================
-
-class Game {
-    constructor(id, whiteName, blackName) {
-        this.id = id;
-
+export class Game {
+    constructor(whiteName, blackName) {
         this.whiteP = new Player(whiteName, Color.WHITE);
         this.blackP = new Player(blackName, Color.BLACK);
 
-        this.board = new Board();
         this.currPlayer = Color.WHITE;
+        this.board = new Board();
 
         this.setupInitialPieces();
     }
 
     setupInitialPieces() {
-        const row = (color, type) => new Piece(type, color);
+        const mainPieces = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook];
 
-        // Black major pieces (row 0)
-        const blackBackRank = ["R", "N", "B", "Q", "K", "B", "N", "R"];
-        blackBackRank.forEach((type, col) => {
-            this.board.placePiece(row(Color.BLACK, type), 0, col);
-        });
+        // Black mainPieces
+        for (let c = 0; c < 8; c++)
+            this.board.getCell(0, c).setPiece(new mainPieces[c](Color.BLACK));
 
-        // Black pawns (row 1)
-        for (let col = 0; col < 8; col++) {
-            this.board.placePiece(row(Color.BLACK, "P"), 1, col);
-        }
+        // Black pawns
+        for (let c = 0; c < 8; c++)
+            this.board.getCell(1, c).setPiece(new Pawn(Color.BLACK));
 
-        // White pawns (row 6)
-        for (let col = 0; col < 8; col++) {
-            this.board.placePiece(row(Color.WHITE, "P"), 6, col);
-        }
+        // White pawns
+        for (let c = 0; c < 8; c++)
+            this.board.getCell(6, c).setPiece(new Pawn(Color.WHITE));
 
-        // White major pieces (row 7)
-        const whiteBackRank = ["R", "N", "B", "Q", "K", "B", "N", "R"];
-        whiteBackRank.forEach((type, col) => {
-            this.board.placePiece(row(Color.WHITE, type), 7, col);
-        });
+        // White mainPieces
+        for (let c = 0; c < 8; c++)
+            this.board.getCell(7, c).setPiece(new mainPieces[c](Color.WHITE));
     }
 
     validateMove(from, to) {
-        // Demo: always allow move
-        return true;
+        return true; // demo mode will always validate
     }
 
     makeMove(from, to) {
@@ -169,20 +125,6 @@ class Game {
     }
 }
 
-// ===============================
-// FACTORY
-// ===============================
-
-export function createGame(id, whiteName, blackName) {
-    return new Game(id, whiteName, blackName);
-}
-
-// Exporting game operations used by React
-export function validateMove(game, from, to) {
-    return game.validateMove(from, to);
-}
-
-export function makeMove(game, from, to) {
-    game.makeMove(from, to);
-    return game;
+export function createGame(white, black) {
+    return new Game(white, black);
 }

@@ -1,4 +1,3 @@
-import React from "react";
 import Square from "./Square";
 
 function Board({ board, selected, onSquareClick }) {
@@ -6,13 +5,11 @@ function Board({ board, selected, onSquareClick }) {
         <div className="board">
             {board.grid.map((row, r) =>
                 row.map((cell, c) => {
-                    const piece = cell ? cell.piece : null;
+                    const piece = cell.piece;
                     const isDark = (r + c) % 2 === 1;
 
                     const isSelected =
-                        selected &&
-                        selected.row === r &&
-                        selected.col === c;
+                        selected && selected.row === r && selected.col === c;
 
                     return (
                         <Square
