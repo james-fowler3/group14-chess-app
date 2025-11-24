@@ -1,38 +1,116 @@
-.App {
-  text-align: center;
+/* ========================= */
+/* Global Layout             */
+/* ========================= */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f3f3f3;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.app-container {
+    padding: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* ========================= */
+/* Join Game Page            */
+/* ========================= */
+
+.join-container {
+    max-width: 400px;
+    margin: 60px auto;
+    padding: 25px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.join-container h1 {
+    text-align: center;
 }
 
-.App-link {
-  color: #61dafb;
+.join-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.join-container input {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.join-container button {
+    padding: 10px;
+    background: #3b7bfd;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.join-container button:hover {
+    background: #316ee6;
+}
+
+/* ========================= */
+/* Game Page Layout          */
+/* ========================= */
+
+.game-container {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.history {
+    margin-top: 20px;
+    text-align: left;
+}
+
+/* ========================= */
+/* Chessboard                */
+/* ========================= */
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(8, 60px);
+    grid-template-rows: repeat(8, 60px);
+    margin: 20px auto;
+    border: 3px solid #333;
+}
+
+.square {
+    width: 60px;
+    height: 60px;
+    font-size: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    border: none;
+}
+
+/* Light & Dark squares */
+.square.light {
+    background: #eee;
+}
+
+.square.dark {
+    background: #769656;
+    color: white;
+}
+
+/* Highlight selected square */
+.square.selected {
+    outline: 3px solid yellow;
+}
+
+/* Piece styling */
+.piece-text {
+    pointer-events: none;
+    font-size: 36px;
 }
