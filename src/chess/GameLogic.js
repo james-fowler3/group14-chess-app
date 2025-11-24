@@ -39,17 +39,46 @@ export class Piece {
     }
 
     canMakeMove(from, to, board) {
-        // Very move allowed --> Just demo
         return true;
     }
 }
 
-export class Pawn extends Piece{ constructor(c){super(PieceType.PAWN,c);} }
-export class Rook extends Piece { constructor(c){super(PieceType.ROOK,c);} }
-export class Knight extends Piece { constructor(c){super(PieceType.KNIGHT,c);} }
-export class Bishop extends Piece { constructor(c){super(PieceType.BISHOP,c);} }
-export class Queen extends Piece { constructor(c){super(PieceType.QUEEN,c);} }
-export class King extends Piece { constructor(c){super(PieceType.KING,c);} }
+export class Pawn extends Piece {
+    constructor(color) {
+        super(PieceType.PAWN, color);
+    }
+}
+
+export class Rook extends Piece {
+    constructor(color) {
+        super(PieceType.ROOK, color);
+    }
+}
+
+export class Knight extends Piece {
+    constructor(color) {
+        super(PieceType.KNIGHT, color);
+    }
+}
+
+export class Bishop extends Piece {
+    constructor(color) {
+        super(PieceType.BISHOP, color);
+    }
+}
+
+export class Queen extends Piece {
+    constructor(color) {
+        super(PieceType.QUEEN, color);
+    }
+}
+
+export class King extends Piece {
+    constructor(color) {
+        super(PieceType.KING, color);
+    }
+}
+
 
 export class Board {
     constructor() {
@@ -98,19 +127,15 @@ export class Game {
     setupInitialPieces() {
         const mainPieces = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook];
 
-        // Black mainPieces
         for (let c = 0; c < 8; c++)
             this.board.getCell(0, c).setPiece(new mainPieces[c](Color.BLACK));
 
-        // Black pawns
         for (let c = 0; c < 8; c++)
             this.board.getCell(1, c).setPiece(new Pawn(Color.BLACK));
 
-        // White pawns
         for (let c = 0; c < 8; c++)
             this.board.getCell(6, c).setPiece(new Pawn(Color.WHITE));
 
-        // White mainPieces
         for (let c = 0; c < 8; c++)
             this.board.getCell(7, c).setPiece(new mainPieces[c](Color.WHITE));
     }

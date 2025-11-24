@@ -6,7 +6,6 @@ function GamePage({ game, setGame }) {
     const navigate = useNavigate();
     const [selected, setSelected] = useState(null);
 
-    // If game isn't created, send user back
     if (!game) {
         return (
             <div>
@@ -20,7 +19,6 @@ function GamePage({ game, setGame }) {
         const cell = game.board.getCell(row, col);
         const piece = cell.piece;
 
-        // First click: select a piece
         if (!selected) {
             if (!piece) return;
             if (piece.color !== game.currPlayer) return;
@@ -29,11 +27,9 @@ function GamePage({ game, setGame }) {
             return;
         }
 
-        // Second click: attempt a move
         const from = selected;
         const to = { row, col };
 
-        // SKIP validation completely (demo mode)
         game.makeMove(from, to);
 
         setGame(game)

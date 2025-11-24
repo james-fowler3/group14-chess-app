@@ -8,8 +8,7 @@ function Board({ board, selected, onSquareClick }) {
                     const piece = cell.piece;
                     const isDark = (r + c) % 2 === 1;
 
-                    const isSelected =
-                        selected && selected.row === r && selected.col === c;
+                    const isSelected = selected && selected.row === r && selected.col === c;
 
                     return (
                         <Square
